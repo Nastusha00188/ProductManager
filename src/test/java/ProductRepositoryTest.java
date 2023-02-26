@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 public class ProductRepositoryTest {
     Book book1 = new Book(1, "Мастер и Маргарита", 100, "Булгаков");
     Smartphone smartphone = new Smartphone(2, "Samsung", 200, "Samsung Group");
-    Book book2 = new Book(3, "Никогде", 300, "Гейман");
+    Book book2 = new Book(3, "Маргарита", 300, "Гейман");
 
     ProductRepository repo = new ProductRepository();
     ProductManager manager = new ProductManager(repo);
@@ -25,6 +25,7 @@ public class ProductRepositoryTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
     @Test
     public void testSearchingMissing() {
         ProductRepository repo = new ProductRepository();
@@ -37,6 +38,7 @@ public class ProductRepositoryTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
     @Test
     public void testSearchSeveral() {
         ProductRepository repo = new ProductRepository();
@@ -44,11 +46,8 @@ public class ProductRepositoryTest {
         manager.add(book1);
         manager.add(smartphone);
         manager.add(book2);
-        Product[] actual = manager.searchBy(
-                "Samsung" +
-                        "Мастер"
-        );
-        Product[] expected = {};
+        Product[] actual = manager.searchBy("Маргарита");
+        Product[] expected = {book1, book2};
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -66,6 +65,7 @@ public class ProductRepositoryTest {
         Assertions.assertArrayEquals(expected, actual);
 
     }
+
     @Test
     public void testAdd() {
         ProductRepository repo = new ProductRepository();
@@ -78,16 +78,18 @@ public class ProductRepositoryTest {
         Assertions.assertArrayEquals(expected, actual);
 
     }
+
     @Test
     public void testAddEmpty() {
         ProductRepository repo = new ProductRepository();
 
-        Product[] expected = { };
+        Product[] expected = {};
         Product[] actual = repo.findAll();
 
         Assertions.assertArrayEquals(expected, actual);
 
     }
+
     @Test
     public void testRemoving() {
         ProductRepository repo = new ProductRepository();
